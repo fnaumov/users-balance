@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->unsignedDecimal('amount', 8, 4)->unique();
+            $table->decimal('amount', 12, 4);
             $table->enum('currency', ['usd', 'eur', 'rub']);
             $table->enum('direction', ['in', 'out']);
             $table->string('description')->nullable();

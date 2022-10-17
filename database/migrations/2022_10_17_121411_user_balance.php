@@ -11,10 +11,11 @@ return new class extends Migration
         Schema::create('user_balances', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->unsignedDecimal('balance', 8, 4);
+            $table->decimal('balance', 12, 4);
             $table->enum('currency', ['usd', 'eur', 'rub']);
             $table->timestamps();
 
+            $table->unique(['user_id', 'currency']);
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
