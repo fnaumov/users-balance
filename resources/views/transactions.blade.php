@@ -1,49 +1,49 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Transactions
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="container">
-                        <div>
-                            <form method="GET" action="{{ route('transactions') }}">
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="container">
+                    <div>
+                        <form method="GET" action="{{ route('transactions') }}" class="row g-3">
+                            <div class="col-auto">
                                 <label for="description_search">Поиск по описанию</label>
                                 <input type="text" name="description_search" id="description_search">
-                            </form>
-                        </div>
+                            </div>
 
-                        <div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Сумма</th>
-                                        <th>Валюта</th>
-                                        <th>Описание</th>
-                                        <th>Дата</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($transactions as $transaction)
-                                    <tr>
-                                        <td>{{$transaction->id}}</td>
-                                        <td>{{$transaction->amount}}</td>
-                                        <td>{{$transaction->currency}}</td>
-                                        <td>{{$transaction->description}}</td>
-                                        <td>{{$transaction->created_at}}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="columns">
-                                <div class="d-flex">
-                                    {{ $transactions->links() }}
-                                </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-3">Найти</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Сумма</th>
+                                    <th>Валюта</th>
+                                    <th>Описание</th>
+                                    <th>Дата</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($transactions as $transaction)
+                                <tr>
+                                    <td>{{$transaction->id}}</td>
+                                    <td>{{$transaction->amount}}</td>
+                                    <td>{{$transaction->currency}}</td>
+                                    <td>{{$transaction->description}}</td>
+                                    <td>{{$transaction->created_at}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <div class="columns">
+                            <div class="d-flex">
+                                {{ $transactions->links() }}
                             </div>
                         </div>
                     </div>
@@ -51,4 +51,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

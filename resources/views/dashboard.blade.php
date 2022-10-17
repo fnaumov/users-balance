@@ -1,25 +1,48 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Dashboard
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <p>Баланс:</p>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="container gy-5">
+                    <div>
+                        <p>Баланс:</p>
 
-                    @foreach ($currencyList as $currency)
-                        @if(isset($balancesKeyByCurrency[$currency]))
-                            <p>{{ $balancesKeyByCurrency[$currency]->balance }} {{ $balancesKeyByCurrency[$currency]->currency }}</p>
-                        @else
-                            <p>0 {{ $currency }}</p>
-                        @endif
-                    @endforeach
+                        @foreach ($currencyList as $currency)
+                            @if(isset($balancesKeyByCurrency[$currency]))
+                                <p>{{ $balancesKeyByCurrency[$currency]->balance }} {{ $balancesKeyByCurrency[$currency]->currency }}</p>
+                            @else
+                                <p>0 {{ $currency }}</p>
+                            @endif
+                        @endforeach
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Сумма</th>
+                                <th>Валюта</th>
+                                <th>Описание</th>
+                                <th>Дата</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($transactions as $transaction)
+                                <tr>
+                                    <td>{{$transaction->id}}</td>
+                                    <td>{{$transaction->amount}}</td>
+                                    <td>{{$transaction->currency}}</td>
+                                    <td>{{$transaction->description}}</td>
+                                    <td>{{$transaction->created_at}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
