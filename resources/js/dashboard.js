@@ -17,7 +17,7 @@ $(document).ready(function(){
     }
 
     function updateTransactionsTable(json){
-        let transactions = json.transactions;
+        let transactions = json.transactions.reverse();
 
         if (transactions.length === 0) {
             return;
@@ -26,7 +26,7 @@ $(document).ready(function(){
         for (let i = 0; i < transactions.length; ++i) {
             let lastTr = $('div#last-transactions').find('tr:last').prependTo('tbody');
 
-            lastTr.find('td:eq(0)').data('id', transactions[i]['id']);
+            lastTr.find('td:eq(0)').attr('data-id', transactions[i]['id']);
             lastTr.find('td:eq(0)').html(transactions[i]['id']);
             lastTr.find('td:eq(1)').html(transactions[i]['amount']);
             lastTr.find('td:eq(2)').html(transactions[i]['currency']);
@@ -36,14 +36,10 @@ $(document).ready(function(){
 
         let balances = json.balances;
 
-        console.log($('div#user-balance').find('p[data-currency]'));
         $('div#user-balance').find('p[data-currency]').each(function() {
-            console.log($(this).find('span'));
             let currency = $(this).data('currency');
 
             $(this).find('span').html(balances[currency].balance);
-
-            console.log(currency, $(this).find('span'), balances[currency].balance);
         });
     }
 });
