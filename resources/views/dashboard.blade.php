@@ -1,23 +1,26 @@
 @extends('layouts.app')
 
+@section('scripts')
+    @parent
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="container gy-5">
-                    <div>
+                    <div id="user-balance">
                         <p>Баланс:</p>
 
                         @foreach ($currencyList as $currency)
-                            @if(isset($balancesKeyByCurrency[$currency]))
-                                <p>{{ $balancesKeyByCurrency[$currency]->balance }} {{ $balancesKeyByCurrency[$currency]->currency }}</p>
-                            @else
-                                <p>0 {{ $currency }}</p>
-                            @endif
+                            <p data-currency="{{ $currency }}">
+                                <span>{{ isset($balancesKeyByCurrency[$currency]) ? $balancesKeyByCurrency[$currency]->balance : 0 }}</span> {{ strtoupper($currency) }}
+                            </p>
                         @endforeach
                     </div>
 
-                    <div>
+                    <div id="last-transactions">
                         <table class="table">
                             <thead>
                             <tr>
@@ -31,7 +34,7 @@
                             <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
-                                    <td>{{$transaction->id}}</td>
+                                    <td data-id="{{$transaction->id}}">{{$transaction->id}}</td>
                                     <td>{{$transaction->amount}}</td>
                                     <td>{{$transaction->currency}}</td>
                                     <td>{{$transaction->description}}</td>

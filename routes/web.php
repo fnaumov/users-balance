@@ -24,6 +24,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    Route::get('dashboard/refresh', [DashboardController::class, 'refresh'])
+        ->name('refresh');
+
     Route::get('transactions', [TransactionController::class, 'index'])
         ->name('transactions');
 });

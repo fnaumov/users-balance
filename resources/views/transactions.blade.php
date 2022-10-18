@@ -26,7 +26,7 @@
                                     <th>Сумма</th>
                                     <th>Валюта</th>
                                     <th>Описание</th>
-                                    <th>Дата</th>
+                                    <th><a href="?sort_field=created_at&sort_direction={{app('request')->input('sort_direction') === 'asc' ? 'desc' : 'asc'}}">Дата</a></th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dictionary\Currency;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -27,6 +28,27 @@ class DashboardController extends Controller
         return view('dashboard', [
             'currencyList' => Currency::getList(),
             'balancesKeyByCurrency' => $balancesKeyByCurrency,
+            'transactions' => $transactions,
+        ]);
+    }
+
+    public function refresh(Request $request)
+    {
+        $balancesKeyByCurrency = Auth::user()->userBalances()
+            ->select('balance', 'currency')
+            ->whereIn('currency', Currency::getList())
+            ->get()
+            ->keyBy('currency')
+        ;
+
+        $transactions = Transaction::getNewTransactions(
+            Auth::user()->id,
+            self::TRANSACTION_LIMIT,
+            $request->get('last_transaction_id')
+        );
+
+        return response()->json([
+            'balances' => $balancesKeyByCurrency,
             'transactions' => $transactions,
         ]);
     }
